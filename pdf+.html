@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDFTree - Your PDF Conversion Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for file list and textarea - Earth Tones */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #44403c; /* stone-700 */
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #78716c; /* stone-500 */
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e; /* stone-400 */
+        }
+        .loader {
+            border-top-color: #fbbf24; /* amber-400 */
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        button, .button-link { 
+            min-width: 120px;
+        }
+        hr {
+            border-color: #57534e; /* stone-600 */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-neutral-800 to-stone-900 text-stone-200 min-h-screen flex flex-col items-center justify-center p-4 selection:bg-amber-500 selection:text-white">
+
+    <div class="bg-stone-800 shadow-2xl rounded-xl p-6 md:p-8 w-full max-w-2xl">
+        <header class="mb-6 text-center">
+            <h1 class="text-3xl md:text-4xl font-bold text-amber-400">PDFTree</h1>
+            <p class="text-stone-400 mt-2">Your simple tool for PDF creation. Supports Images to PDF and Text to PDF.</p>
+        </header>
+
+        <main>
+            <section id="imageToPdfSection" class="mb-8">
+                <h2 class="text-xl font-semibold text-amber-300 mb-4">Images to PDF</h2>
+                <div class="mb-6">
+                    <label for="imageUpload" class="block text-sm font-medium text-stone-300 mb-2">Select Images (JPG, PNG):</label>
+                    <input type="file" id="imageUpload" multiple accept="image/jpeg, image/png"
+                        class="block w-full text-sm text-stone-400
+                               file:mr-4 file:py-2 file:px-4
+                               file:rounded-lg file:border-0
+                               file:text-sm file:font-semibold
+                               file:bg-orange-600 file:text-orange-50 
+                               hover:file:bg-orange-700 
+                               cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 rounded-lg border border-stone-600 p-2.5">
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-sm font-medium text-stone-300 mb-1">Selected Files:</h3>
+                    <div id="fileList" class="custom-scrollbar max-h-32 overflow-y-auto bg-stone-700 p-3 rounded-lg border border-stone-600 text-xs text-stone-300">
+                        No files selected.
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <label for="imagePageSize" class="block text-sm font-medium text-stone-300 mb-1">PDF Page Size (for Images):</label>
+                    <select id="imagePageSize" class="w-full p-2 bg-stone-700 border border-stone-600 rounded-lg text-stone-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+                        <option value="A4">A4</option>
+                        <option value="Letter">Letter</option>
+                        <option value="FitImage">Fit to Image (First Image)</option>
+                    </select>
+                </div>
+
+                <div class="text-center">
+                    <button id="convertImagesToPdfButton"
+                        class="bg-orange-600 hover:bg-orange-700 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-all duration-150 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto">
+                        <span id="imageButtonText">Convert Images to PDF</span>
+                        <div id="imageLoader" class="loader w-5 h-5 rounded-full border-2 border-stone-300 border-t-amber-400 ml-2 hidden"></div>
+                    </button>
+                </div>
+            </section>
+
+            <hr class="my-8">
+
+            <section id="textToPdfSection" class="mb-8">
+                <h2 class="text-xl font-semibold text-amber-300 mb-4">Text to PDF</h2>
+                <div class="mb-6">
+                    <label for="textInput" class="block text-sm font-medium text-stone-300 mb-2">Paste your text here:</label>
+                    <textarea id="textInput" rows="10"
+                        class="custom-scrollbar w-full p-3 bg-stone-700 border border-stone-600 rounded-lg text-stone-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none placeholder-stone-500 resize-y"
+                        placeholder="Enter text to convert to PDF..."></textarea>
+                </div>
+
+                <div class="mb-6">
+                    <label for="textPageSize" class="block text-sm font-medium text-stone-300 mb-1">PDF Page Size (for Text):</label>
+                    <select id="textPageSize" class="w-full p-2 bg-stone-700 border border-stone-600 rounded-lg text-stone-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+                        <option value="A4">A4</option>
+                        <option value="Letter">Letter</option>
+                    </select>
+                </div>
+                 <div class="mb-6">
+                    <label for="fontSize" class="block text-sm font-medium text-stone-300 mb-1">Font Size:</label>
+                    <input type="number" id="fontSize" value="12" min="6" max="72"
+                        class="w-full p-2 bg-stone-700 border border-stone-600 rounded-lg text-stone-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+                </div>
+
+
+                <div class="text-center">
+                    <button id="convertTextToPdfButton"
+                        class="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-all duration-150 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto">
+                        <span id="textButtonText">Convert Text to PDF</span>
+                        <div id="textLoader" class="loader w-5 h-5 rounded-full border-2 border-stone-300 border-t-amber-400 ml-2 hidden"></div>
+                    </button>
+                </div>
+            </section>
+            
+            <hr class="my-8">
+
+            <div id="statusArea" class="min-h-[24px] mb-4 text-sm text-center font-medium"></div>
+            <div id="downloadArea" class="text-center"></div>
+        </main>
+
+        <footer class="mt-8 text-center">
+            <p class="text-xs text-stone-500 mb-4">
+                Create PDF documents right in your browser. Your files are not uploaded to any server.
+            </p>
+            <a href="https://paypal.me/trreyy?country.x=US&locale.x=en_US" id="donateLink" target="_blank" rel="noopener noreferrer" class="button-link inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition-colors duration-150 ease-in-out transform hover:scale-105">
+                <i class="fas fa-heart mr-2"></i> Support PDFTree
+            </a>
+        </footer>
+    </div>
+
+    <script>
+        // Get DOM elements
+        const imageUpload = document.getElementById('imageUpload');
+        const fileListDiv = document.getElementById('fileList');
+        const convertImagesToPdfButton = document.getElementById('convertImagesToPdfButton');
+        const imageButtonText = document.getElementById('imageButtonText');
+        const imageLoader = document.getElementById('imageLoader');
+        const imagePageSizeSelect = document.getElementById('imagePageSize');
+
+        const textInput = document.getElementById('textInput');
+        const convertTextToPdfButton = document.getElementById('convertTextToPdfButton');
+        const textButtonText = document.getElementById('textButtonText');
+        const textLoader = document.getElementById('textLoader');
+        const textPageSizeSelect = document.getElementById('textPageSize');
+        const fontSizeInput = document.getElementById('fontSize');
+
+        const statusArea = document.getElementById('statusArea');
+        const downloadArea = document.getElementById('downloadArea');
+        
+        let selectedFiles = [];
+
+        // pdf-lib objects
+        const { PDFDocument, StandardFonts, rgb, PageSizes, layoutMultilineText } = PDFLib; 
+
+        /**
+         * Updates the list of selected files displayed to the user for image conversion.
+         */
+        imageUpload.addEventListener('change', (event) => {
+            selectedFiles = Array.from(event.target.files);
+            fileListDiv.innerHTML = ''; 
+            downloadArea.innerHTML = ''; 
+            statusArea.textContent = ''; 
+
+            if (selectedFiles.length > 0) {
+                const ul = document.createElement('ul');
+                ul.className = 'list-disc list-inside text-stone-300'; // Adjusted text color
+                selectedFiles.forEach(file => {
+                    const li = document.createElement('li');
+                    li.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                    ul.appendChild(li);
+                });
+                fileListDiv.appendChild(ul);
+                convertImagesToPdfButton.disabled = false;
+            } else {
+                fileListDiv.textContent = 'No files selected.';
+                convertImagesToPdfButton.disabled = true;
+            }
+        });
+
+        /**
+         * Shows a status message.
+         * @param {string} message - The message to display.
+         * @param {'success' | 'error' | 'info'} type - The type of message.
+         */
+        function showStatus(message, type = 'info') {
+            statusArea.textContent = message;
+            // Earthy status colors
+            statusArea.classList.remove('text-green-400', 'text-red-400', 'text-amber-300'); 
+            switch (type) {
+                case 'success': statusArea.classList.add('text-green-400'); break;
+                case 'error': statusArea.classList.add('text-red-400'); break; // Standard red for error is often clearest
+                case 'info': default: statusArea.classList.add('text-amber-300'); break;
+            }
+        }
+        
+        /**
+         * Sets the button state for image conversion.
+         * @param {boolean} isLoading - True if loading, false otherwise.
+         */
+        function setImageButtonLoading(isLoading) {
+            if (isLoading) {
+                convertImagesToPdfButton.disabled = true;
+                imageButtonText.textContent = 'Processing...';
+                imageLoader.classList.remove('hidden');
+            } else {
+                convertImagesToPdfButton.disabled = false;
+                imageButtonText.textContent = 'Convert Images to PDF';
+                imageLoader.classList.add('hidden');
+            }
+        }
+
+        /**
+         * Sets the button state for text conversion.
+         * @param {boolean} isLoading - True if loading, false otherwise.
+         */
+        function setTextButtonLoading(isLoading) {
+            if (isLoading) {
+                convertTextToPdfButton.disabled = true;
+                textButtonText.textContent = 'Processing...';
+                textLoader.classList.remove('hidden');
+            } else {
+                convertTextToPdfButton.disabled = false;
+                textButtonText.textContent = 'Convert Text to PDF';
+                textLoader.classList.add('hidden');
+            }
+        }
+        
+        /**
+         * Creates and offers a PDF for download.
+         * @param {Uint8Array} pdfBytes - The PDF data.
+         * @param {string} baseFileName - The base name for the downloaded file.
+         */
+        function offerPdfDownload(pdfBytes, baseFileName) {
+            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `PDFTree_${baseFileName}_${Date.now()}.pdf`; // Updated download filename prefix
+            a.textContent = 'Download PDF';
+            // Download link with new earth tone
+            a.className = 'bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md inline-block transition-colors';
+            
+            downloadArea.innerHTML = ''; 
+            downloadArea.appendChild(a);
+        }
+
+
+        /**
+         * Handles the Image to PDF conversion process.
+         */
+        convertImagesToPdfButton.addEventListener('click', async () => {
+            if (selectedFiles.length === 0) {
+                showStatus('Please select some images first.', 'error');
+                return;
+            }
+
+            setImageButtonLoading(true);
+            showStatus('Starting image to PDF generation...', 'info');
+            downloadArea.innerHTML = ''; 
+
+            try {
+                const pdfDoc = await PDFDocument.create();
+                const selectedPageSizeOption = imagePageSizeSelect.value;
+
+                for (let i = 0; i < selectedFiles.length; i++) {
+                    const file = selectedFiles[i];
+                    showStatus(`Processing image ${i + 1} of ${selectedFiles.length}: ${file.name}`, 'info');
+                    
+                    const imageBytes = await file.arrayBuffer();
+                    let embeddedImage;
+
+                    if (file.type === 'image/jpeg') {
+                        embeddedImage = await pdfDoc.embedJpg(imageBytes);
+                    } else if (file.type === 'image/png') {
+                        embeddedImage = await pdfDoc.embedPng(imageBytes);
+                    } else {
+                        console.warn(`Skipping unsupported file type: ${file.name}`);
+                        showStatus(`Skipped unsupported file: ${file.name}`, 'error');
+                        continue; 
+                    }
+
+                    const { width: imgWidth, height: imgHeight } = embeddedImage.scale(1);
+                    let pageWidth, pageHeight;
+
+                    if (selectedPageSizeOption === 'FitImage') {
+                        if (i === 0) { 
+                            pageWidth = imgWidth;
+                            pageHeight = imgHeight;
+                        } else if (pdfDoc.getPageCount() > 0) {
+                             const firstPage = pdfDoc.getPage(0); 
+                             pageWidth = firstPage.getWidth();
+                             pageHeight = firstPage.getHeight();
+                        } else { 
+                            pageWidth = imgWidth;
+                            pageHeight = imgHeight;
+                        }
+                    } else { 
+                        const standardPageSize = PageSizes[selectedPageSizeOption];
+                        pageWidth = standardPageSize[0];
+                        pageHeight = standardPageSize[1];
+                    }
+
+                    const page = pdfDoc.addPage([pageWidth, pageHeight]);
+                    const xScale = page.getWidth() / imgWidth;
+                    const yScale = page.getHeight() / imgHeight;
+                    const scale = Math.min(xScale, yScale); 
+                    const scaledWidth = imgWidth * scale;
+                    const scaledHeight = imgHeight * scale;
+                    const xPos = (page.getWidth() - scaledWidth) / 2;
+                    const yPos = (page.getHeight() - scaledHeight) / 2;
+                    
+                    page.drawImage(embeddedImage, { x: xPos, y: yPos, width: scaledWidth, height: scaledHeight });
+                }
+
+                if (pdfDoc.getPageCount() === 0) {
+                    showStatus('No valid images were processed. PDF not created.', 'error');
+                    setImageButtonLoading(false);
+                    return;
+                }
+
+                const pdfBytes = await pdfDoc.save();
+                offerPdfDownload(pdfBytes, 'images_converted');
+                showStatus('Images PDF created successfully! Click the link to download.', 'success');
+
+            } catch (error) {
+                console.error('Error creating image PDF:', error);
+                showStatus(`Error creating image PDF: ${error.message}`, 'error');
+            } finally {
+                setImageButtonLoading(false);
+            }
+        });
+
+        /**
+         * Handles the Text to PDF conversion process.
+         */
+        convertTextToPdfButton.addEventListener('click', async () => {
+            const text = textInput.value.trim();
+            if (!text) {
+                showStatus('Please enter some text first.', 'error');
+                return;
+            }
+
+            setTextButtonLoading(true);
+            showStatus('Starting text to PDF generation...', 'info');
+            downloadArea.innerHTML = '';
+
+            try {
+                const pdfDoc = await PDFDocument.create();
+                const selectedPageSizeOption = textPageSizeSelect.value; 
+                const standardPageSize = PageSizes[selectedPageSizeOption];
+                
+                const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+                const FONT_SIZE = parseInt(fontSizeInput.value) || 12;
+                const LINE_HEIGHT_RATIO = 1.2; 
+                const PADDING = 50; 
+
+                let currentPage = pdfDoc.addPage(standardPageSize);
+                let currentY = currentPage.getHeight() - PADDING; 
+
+                const textLines = text.split('\n');
+
+                for (const line of textLines) {
+                    const { lines: wrappedLines } = layoutMultilineText(line, {
+                        font: font,
+                        fontSize: FONT_SIZE,
+                        bounds: {
+                            x: PADDING,
+                            y: currentY, 
+                            width: currentPage.getWidth() - 2 * PADDING,
+                            height: currentY - PADDING 
+                        },
+                        lineHeight: FONT_SIZE * LINE_HEIGHT_RATIO,
+                    });
+                    
+                    for (const singleWrappedLine of wrappedLines) {
+                        const textHeight = FONT_SIZE * LINE_HEIGHT_RATIO;
+                        if (currentY - textHeight < PADDING) { 
+                            currentPage = pdfDoc.addPage(standardPageSize); 
+                            currentY = currentPage.getHeight() - PADDING; 
+                        }
+                        currentPage.drawText(singleWrappedLine.text, {
+                            x: PADDING,
+                            y: currentY - FONT_SIZE, 
+                            font: font,
+                            size: FONT_SIZE,
+                            color: rgb(0.1, 0.1, 0.1), // Dark text color for light PDF background
+                            lineHeight: FONT_SIZE * LINE_HEIGHT_RATIO,
+                        });
+                        currentY -= textHeight; 
+                    }
+                }
+                
+                const pdfBytes = await pdfDoc.save();
+                offerPdfDownload(pdfBytes, 'text_converted');
+                showStatus('Text PDF created successfully! Click the link to download.', 'success');
+
+            } catch (error) {
+                console.error('Error creating text PDF:', error);
+                showStatus(`Error creating text PDF: ${error.message}`, 'error');
+            } finally {
+                setTextButtonLoading(false);
+            }
+        });
+
+
+        // Initial button states
+        convertImagesToPdfButton.disabled = true; 
+    </script>
+</body>
+</html>
