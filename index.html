@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
 
-
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4514307373624605"
      crossorigin="anonymous"></script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDFTree - Secure PDF Conversion done on your computer and nowhere else.</title> <script src="https://cdn.tailwindcss.com"></script>
+    <title>PDFTree - Secure PDF Conversion done on your computer and nowhere else.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -45,7 +45,7 @@
             border-color: #57534e; /* stone-600 */
         }
 
-        /* --- Styles for privacy section (already present, kept for reference) --- */
+        /* --- Styles for privacy section --- */
         .privacy-note {
             color: #27ae60; /* Green for reassurance */
             font-weight: bold;
@@ -123,7 +123,6 @@
             font-weight: bold;
             font-size: 0.9em;
         }
-        /* --- End styles for privacy section --- */
 
         /* New navigation styling */
         .nav-link {
@@ -134,32 +133,56 @@
             color: #fbbf24; /* amber-400 */
         }
 
+        /* Drag and Drop styles */
+        .drop-area {
+            border: 2px dashed #78716c; /* stone-500 */
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+            cursor: pointer;
+            margin-bottom: 1rem; /* Add some space below */
+        }
+        .drop-area.drag-over {
+            border-color: #fbbf24; /* amber-400 */
+            background-color: #57534e; /* stone-600 */
+        }
+        .drop-area-text {
+            color: #a8a29e; /* stone-400 */
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+        .drop-area input[type="file"] {
+            display: none; /* Hide the default file input visually */
+        }
+
     </style>
 </head>
 <body class="bg-gradient-to-br from-neutral-800 to-stone-900 text-stone-200 min-h-screen flex flex-col items-center justify-center p-4 selection:bg-amber-500 selection:text-white">
 
     <div class="bg-stone-800 shadow-2xl rounded-xl p-6 md:p-8 w-full max-w-2xl">
         <header class="mb-6 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold text-amber-400">Secure PDF Conversion done on your computer and nowhere else.</h1> <p class="text-stone-400 mt-2">Unlike other online converters, PDFTree processes all your documents directly in your web browser. This means your sensitive files never leave your computer and are never uploaded to our servers, ensuring your data remains private and secure. If you have any questions email contact@pdftree.org. Desktop Application with .docx to PDF coming soon!</p> <nav class="mt-4">
+            <h1 class="text-3xl md:text-4xl font-bold text-amber-400">Secure PDF Conversion done on your computer and nowhere else.</h1>
+            <p class="text-stone-400 mt-2">Unlike other online converters, PDFTree processes all your documents directly in your web browser. This means your sensitive files never leave your computer and are never uploaded to our servers, ensuring your data remains private and secure. If you have any questions email contact@pdftree.org. Desktop Application with .docx to PDF coming soon!</p>
+            <nav class="mt-4">
                 <a href="index.html" class="nav-link text-lg mx-3 font-semibold text-amber-400">Home</a>
                 <span class="text-stone-500">|</span>
-                <a href="about.html" class="nav-link text-lg mx-3">About PDFTree</a> </nav>
+                <a href="about.html" class="nav-link text-lg mx-3">About PDFTree</a>
+            </nav>
         </header>
 
         <main>
             <section id="imageToPdfSection" class="mb-8">
                 <h2 class="text-xl font-semibold text-amber-300 mb-4">Images to PDF</h2>
-                <div class="mb-6">
-                    <label for="imageUpload" class="block text-sm font-medium text-stone-300 mb-2">Select Images (JPG, PNG):</label>
-                    <input type="file" id="imageUpload" multiple accept="image/jpeg, image/png"
-                        class="block w-full text-sm text-stone-400
-                               file:mr-4 file:py-2 file:px-4
-                               file:rounded-lg file:border-0
-                               file:text-sm file:font-semibold
-                               file:bg-orange-600 file:text-orange-50
-                               hover:file:bg-orange-700
-                               cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 rounded-lg border border-stone-600 p-2.5">
-                    <p class="privacy-note"><i class="fas fa-lock"></i> Your images stay on your device, never uploaded.</p> </div>
+                <div class="drop-area" id="dropArea">
+                    <p class="drop-area-text">Drag & Drop Images (JPG, PNG) here</p>
+                    <p class="drop-area-text">or</p>
+                    <label for="imageUpload" class="block text-sm font-medium text-stone-300 mb-2">
+                        <span class="inline-block py-2 px-4 rounded-lg border-0 text-sm font-semibold bg-orange-600 text-orange-50 hover:bg-orange-700 cursor-pointer transition-colors">Browse Files</span>
+                    </label>
+                    <input type="file" id="imageUpload" multiple accept="image/jpeg, image/png">
+                    <p class="privacy-note"><i class="fas fa-lock"></i> Your images stay on your device, never uploaded.</p>
+                </div>
 
                 <div class="mb-6">
                     <h3 class="text-sm font-medium text-stone-300 mb-1">Selected Files:</h3>
@@ -195,7 +218,8 @@
                     <textarea id="textInput" rows="10"
                         class="custom-scrollbar w-full p-3 bg-stone-700 border border-stone-600 rounded-lg text-stone-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none placeholder-stone-500 resize-y"
                         placeholder="Enter text to convert to PDF..."></textarea>
-                    <p class="privacy-note"><i class="fas fa-lock"></i> Your text stays on your device, never uploaded.</p> </div>
+                    <p class="privacy-note"><i class="fas fa-lock"></i> Your text stays on your device, never uploaded.</p>
+                </div>
 
                 <div class="mb-6">
                     <label for="textPageSize" class="block text-sm font-medium text-stone-300 mb-1">PDF Page Size (for Text):</label>
@@ -268,6 +292,7 @@
     <script>
         // Get DOM elements
         const imageUpload = document.getElementById('imageUpload');
+        const dropArea = document.getElementById('dropArea'); // New: Drag and Drop area
         const fileListDiv = document.getElementById('fileList');
         const convertImagesToPdfButton = document.getElementById('convertImagesToPdfButton');
         const imageButtonText = document.getElementById('imageButtonText');
@@ -290,17 +315,22 @@
         const { PDFDocument, StandardFonts, rgb, PageSizes, layoutMultilineText } = PDFLib;
 
         /**
-         * Updates the list of selected files displayed to the user for image conversion.
+         * Processes an array of files, updating the UI.
+         * @param {FileList | File[]} files The files to process.
          */
-        imageUpload.addEventListener('change', (event) => {
-            selectedFiles = Array.from(event.target.files);
+        function handleFiles(files) {
+            selectedFiles = []; // Clear previous selection
             fileListDiv.innerHTML = '';
             downloadArea.innerHTML = '';
             statusArea.textContent = '';
 
-            if (selectedFiles.length > 0) {
+            const validImageTypes = ['image/jpeg', 'image/png'];
+            const acceptedFiles = Array.from(files).filter(file => validImageTypes.includes(file.type));
+
+            if (acceptedFiles.length > 0) {
+                selectedFiles = acceptedFiles; // Update selectedFiles with only accepted ones
                 const ul = document.createElement('ul');
-                ul.className = 'list-disc list-inside text-stone-300'; // Adjusted text color
+                ul.className = 'list-disc list-inside text-stone-300';
                 selectedFiles.forEach(file => {
                     const li = document.createElement('li');
                     li.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
@@ -309,11 +339,38 @@
                 fileListDiv.appendChild(ul);
                 convertImagesToPdfButton.disabled = false;
             } else {
-                fileListDiv.textContent = 'No files selected.';
+                fileListDiv.textContent = 'No valid image files selected or dropped.';
                 convertImagesToPdfButton.disabled = true;
+                showStatus('Please select JPG or PNG images.', 'error');
             }
+        }
+
+        /**
+         * Updates the list of selected files displayed to the user for image conversion.
+         */
+        imageUpload.addEventListener('change', (event) => {
+            handleFiles(event.target.files);
         });
 
+        // New: Drag and Drop Event Listeners
+        dropArea.addEventListener('dragover', (event) => {
+            event.preventDefault(); // Prevent default to allow drop
+            dropArea.classList.add('drag-over');
+            showStatus('Drop your images here...', 'info');
+        });
+
+        dropArea.addEventListener('dragleave', () => {
+            dropArea.classList.remove('drag-over');
+            statusArea.textContent = ''; // Clear status when drag leaves
+        });
+
+        dropArea.addEventListener('drop', (event) => {
+            event.preventDefault(); // Prevent default to allow drop
+            dropArea.classList.remove('drag-over');
+            handleFiles(event.dataTransfer.files);
+        });
+
+        // Existing functions remain the same
         /**
          * Shows a status message.
          * @param {string} message - The message to display.
@@ -556,7 +613,6 @@
 <script>
      (adsbygoogle = window.adsbygoogle || []).push({});
 </script>
-
 
 </body>
 </html>
