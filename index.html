@@ -8,8 +8,7 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDFTree - Your PDF Conversion Tool</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>PDFTree - Secure PDF Conversion done on your computer and nowhere else.</title> <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -39,11 +38,100 @@
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        button, .button-link { 
+        button, .button-link {
             min-width: 120px;
         }
         hr {
             border-color: #57534e; /* stone-600 */
+        }
+
+        /* --- Styles for privacy section (already present, kept for reference) --- */
+        .privacy-note {
+            color: #27ae60; /* Green for reassurance */
+            font-weight: bold;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+        }
+        .privacy-note .fa-lock {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        .privacy-features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        .feature-card {
+            background-color: #44403c; /* stone-700 */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .feature-card .icon {
+            font-size: 2.5em;
+            color: #fbbf24; /* amber-400 */
+            margin-bottom: 15px;
+        }
+        .feature-card h3 {
+            font-size: 1.25em;
+            font-weight: 600;
+            color: #fbbf24; /* amber-400 */
+            margin-bottom: 10px;
+        }
+        .feature-card p {
+            font-size: 0.95em;
+            color: #d1d5db; /* stone-300 */
+        }
+        .privacy-steps-list {
+            list-style: none; /* Remove default list style */
+            counter-reset: step-counter;
+            padding: 0;
+            max-width: 600px;
+            margin: 30px auto 0 auto;
+        }
+        .privacy-steps-list li {
+            position: relative;
+            padding-left: 40px;
+            margin-bottom: 15px;
+            font-size: 1.05em;
+            color: #d1d5db; /* stone-300 */
+        }
+        .privacy-steps-list li:before {
+            counter-increment: step-counter;
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: #f97316; /* orange-500 */
+            color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+        /* --- End styles for privacy section --- */
+
+        /* New navigation styling */
+        .nav-link {
+            color: #a8a29e; /* stone-400 */
+            transition: color 0.2s ease-in-out;
+        }
+        .nav-link:hover {
+            color: #fbbf24; /* amber-400 */
         }
 
     </style>
@@ -52,8 +140,10 @@
 
     <div class="bg-stone-800 shadow-2xl rounded-xl p-6 md:p-8 w-full max-w-2xl">
         <header class="mb-6 text-center">
-            <h1 class="text-3xl md:text-4xl font-bold text-amber-400">PDFTree</h1>
-            <p class="text-stone-400 mt-2">Your simple tool for PDF creation. Supports Images to PDF and Text to PDF.</p>
+            <h1 class="text-3xl md:text-4xl font-bold text-amber-400">Secure PDF Conversion done on your computer and nowhere else.</h1> <p class="text-stone-400 mt-2">Unlike other online converters, PDFTree processes all your documents directly in your web browser. This means your sensitive files never leave your computer and are never uploaded to our servers, ensuring your data remains private and secure.</p> <nav class="mt-4">
+                <a href="index.html" class="nav-link text-lg mx-3 font-semibold text-amber-400">Home</a>
+                <span class="text-stone-500">|</span>
+                <a href="about.html" class="nav-link text-lg mx-3">About PDFTree</a> </nav>
         </header>
 
         <main>
@@ -66,10 +156,10 @@
                                file:mr-4 file:py-2 file:px-4
                                file:rounded-lg file:border-0
                                file:text-sm file:font-semibold
-                               file:bg-orange-600 file:text-orange-50 
-                               hover:file:bg-orange-700 
+                               file:bg-orange-600 file:text-orange-50
+                               hover:file:bg-orange-700
                                cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 rounded-lg border border-stone-600 p-2.5">
-                </div>
+                    <p class="privacy-note"><i class="fas fa-lock"></i> Your images stay on your device, never uploaded.</p> </div>
 
                 <div class="mb-6">
                     <h3 class="text-sm font-medium text-stone-300 mb-1">Selected Files:</h3>
@@ -77,7 +167,7 @@
                         No files selected.
                     </div>
                 </div>
-                
+
                 <div class="mb-6">
                     <label for="imagePageSize" class="block text-sm font-medium text-stone-300 mb-1">PDF Page Size (for Images):</label>
                     <select id="imagePageSize" class="w-full p-2 bg-stone-700 border border-stone-600 rounded-lg text-stone-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
@@ -105,7 +195,7 @@
                     <textarea id="textInput" rows="10"
                         class="custom-scrollbar w-full p-3 bg-stone-700 border border-stone-600 rounded-lg text-stone-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none placeholder-stone-500 resize-y"
                         placeholder="Enter text to convert to PDF..."></textarea>
-                </div>
+                    <p class="privacy-note"><i class="fas fa-lock"></i> Your text stays on your device, never uploaded.</p> </div>
 
                 <div class="mb-6">
                     <label for="textPageSize" class="block text-sm font-medium text-stone-300 mb-1">PDF Page Size (for Text):</label>
@@ -129,7 +219,36 @@
                     </button>
                 </div>
             </section>
-            
+
+            <hr class="my-8">
+
+            <section class="privacy-section text-center mb-8">
+                <h2 class="text-2xl font-semibold text-amber-300 mb-6">How PDFTree Keeps Your Data Private</h2>
+                <div class="privacy-features-grid">
+                    <div class="feature-card">
+                        <span class="icon"><i class="fas fa-cloud-arrow-down"></i></span>
+                        <h3>No Server Uploads</h3>
+                        <p>Your files are never uploaded to our servers. All conversion processes happen directly on your device.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="icon"><i class="fas fa-laptop-code"></i></span>
+                        <h3>Purely Client-Side</h3>
+                        <p>PDFTree leverages advanced browser technology to perform conversions directly within your web browser.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="icon"><i class="fas fa-shield-alt"></i></span>
+                        <h3>Complete Control</h3>
+                        <p>You maintain full control over your sensitive documents, ensuring your privacy is always protected.</p>
+                    </div>
+                </div>
+
+                <h3 class="text-xl font-semibold text-amber-300 mb-4">The Process is Simple & Private:</h3>
+                <ol class="privacy-steps-list">
+                    <li><strong>Select Your Document:</strong> Choose the file you want to convert from your computer.</li>
+                    <li><strong>Browser Processes:</strong> Our innovative code processes your file directly in your web browser.</li>
+                    <li><strong>Download Your PDF:</strong> Your new PDF is generated instantly and ready for download, all without ever leaving your device.</li>
+                </ol>
+            </section>
             <hr class="my-8">
 
             <div id="statusArea" class="min-h-[24px] mb-4 text-sm text-center font-medium"></div>
@@ -138,7 +257,7 @@
 
         <footer class="mt-8 text-center">
             <p class="text-xs text-stone-500 mb-4">
-                Create PDF documents right in your browser. Your files are not uploaded to any server.
+                &copy; <span id="currentYear"></span> PDFTree. Secure PDF Conversion done on your computer and nowhere else.
             </p>
             <a href="https://paypal.me/trreyy?country.x=US&locale.x=en_US" id="donateLink" target="_blank" rel="noopener noreferrer" class="button-link inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition-colors duration-150 ease-in-out transform hover:scale-105">
                 <i class="fas fa-heart mr-2"></i> Support PDFTree
@@ -164,20 +283,20 @@
 
         const statusArea = document.getElementById('statusArea');
         const downloadArea = document.getElementById('downloadArea');
-        
+
         let selectedFiles = [];
 
         // pdf-lib objects
-        const { PDFDocument, StandardFonts, rgb, PageSizes, layoutMultilineText } = PDFLib; 
+        const { PDFDocument, StandardFonts, rgb, PageSizes, layoutMultilineText } = PDFLib;
 
         /**
          * Updates the list of selected files displayed to the user for image conversion.
          */
         imageUpload.addEventListener('change', (event) => {
             selectedFiles = Array.from(event.target.files);
-            fileListDiv.innerHTML = ''; 
-            downloadArea.innerHTML = ''; 
-            statusArea.textContent = ''; 
+            fileListDiv.innerHTML = '';
+            downloadArea.innerHTML = '';
+            statusArea.textContent = '';
 
             if (selectedFiles.length > 0) {
                 const ul = document.createElement('ul');
@@ -203,14 +322,14 @@
         function showStatus(message, type = 'info') {
             statusArea.textContent = message;
             // Earthy status colors
-            statusArea.classList.remove('text-green-400', 'text-red-400', 'text-amber-300'); 
+            statusArea.classList.remove('text-green-400', 'text-red-400', 'text-amber-300');
             switch (type) {
                 case 'success': statusArea.classList.add('text-green-400'); break;
                 case 'error': statusArea.classList.add('text-red-400'); break; // Standard red for error is often clearest
                 case 'info': default: statusArea.classList.add('text-amber-300'); break;
             }
         }
-        
+
         /**
          * Sets the button state for image conversion.
          * @param {boolean} isLoading - True if loading, false otherwise.
@@ -242,7 +361,7 @@
                 textLoader.classList.add('hidden');
             }
         }
-        
+
         /**
          * Creates and offers a PDF for download.
          * @param {Uint8Array} pdfBytes - The PDF data.
@@ -257,8 +376,8 @@
             a.textContent = 'Download PDF';
             // Download link with new earth tone
             a.className = 'bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md inline-block transition-colors';
-            
-            downloadArea.innerHTML = ''; 
+
+            downloadArea.innerHTML = '';
             downloadArea.appendChild(a);
         }
 
@@ -274,7 +393,7 @@
 
             setImageButtonLoading(true);
             showStatus('Starting image to PDF generation...', 'info');
-            downloadArea.innerHTML = ''; 
+            downloadArea.innerHTML = '';
 
             try {
                 const pdfDoc = await PDFDocument.create();
@@ -283,7 +402,7 @@
                 for (let i = 0; i < selectedFiles.length; i++) {
                     const file = selectedFiles[i];
                     showStatus(`Processing image ${i + 1} of ${selectedFiles.length}: ${file.name}`, 'info');
-                    
+
                     const imageBytes = await file.arrayBuffer();
                     let embeddedImage;
 
@@ -294,25 +413,25 @@
                     } else {
                         console.warn(`Skipping unsupported file type: ${file.name}`);
                         showStatus(`Skipped unsupported file: ${file.name}`, 'error');
-                        continue; 
+                        continue;
                     }
 
                     const { width: imgWidth, height: imgHeight } = embeddedImage.scale(1);
                     let pageWidth, pageHeight;
 
                     if (selectedPageSizeOption === 'FitImage') {
-                        if (i === 0) { 
+                        if (i === 0) {
                             pageWidth = imgWidth;
                             pageHeight = imgHeight;
                         } else if (pdfDoc.getPageCount() > 0) {
-                             const firstPage = pdfDoc.getPage(0); 
+                             const firstPage = pdfDoc.getPage(0);
                              pageWidth = firstPage.getWidth();
                              pageHeight = firstPage.getHeight();
-                        } else { 
+                        } else {
                             pageWidth = imgWidth;
                             pageHeight = imgHeight;
                         }
-                    } else { 
+                    } else {
                         const standardPageSize = PageSizes[selectedPageSizeOption];
                         pageWidth = standardPageSize[0];
                         pageHeight = standardPageSize[1];
@@ -321,12 +440,12 @@
                     const page = pdfDoc.addPage([pageWidth, pageHeight]);
                     const xScale = page.getWidth() / imgWidth;
                     const yScale = page.getHeight() / imgHeight;
-                    const scale = Math.min(xScale, yScale); 
+                    const scale = Math.min(xScale, yScale);
                     const scaledWidth = imgWidth * scale;
                     const scaledHeight = imgHeight * scale;
                     const xPos = (page.getWidth() - scaledWidth) / 2;
                     const yPos = (page.getHeight() - scaledHeight) / 2;
-                    
+
                     page.drawImage(embeddedImage, { x: xPos, y: yPos, width: scaledWidth, height: scaledHeight });
                 }
 
@@ -364,16 +483,16 @@
 
             try {
                 const pdfDoc = await PDFDocument.create();
-                const selectedPageSizeOption = textPageSizeSelect.value; 
+                const selectedPageSizeOption = textPageSizeSelect.value;
                 const standardPageSize = PageSizes[selectedPageSizeOption];
-                
+
                 const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
                 const FONT_SIZE = parseInt(fontSizeInput.value) || 12;
-                const LINE_HEIGHT_RATIO = 1.2; 
-                const PADDING = 50; 
+                const LINE_HEIGHT_RATIO = 1.2;
+                const PADDING = 50;
 
                 let currentPage = pdfDoc.addPage(standardPageSize);
-                let currentY = currentPage.getHeight() - PADDING; 
+                let currentY = currentPage.getHeight() - PADDING;
 
                 const textLines = text.split('\n');
 
@@ -383,31 +502,31 @@
                         fontSize: FONT_SIZE,
                         bounds: {
                             x: PADDING,
-                            y: currentY, 
+                            y: currentY,
                             width: currentPage.getWidth() - 2 * PADDING,
-                            height: currentY - PADDING 
+                            height: currentY - PADDING
                         },
                         lineHeight: FONT_SIZE * LINE_HEIGHT_RATIO,
                     });
-                    
+
                     for (const singleWrappedLine of wrappedLines) {
                         const textHeight = FONT_SIZE * LINE_HEIGHT_RATIO;
-                        if (currentY - textHeight < PADDING) { 
-                            currentPage = pdfDoc.addPage(standardPageSize); 
-                            currentY = currentPage.getHeight() - PADDING; 
+                        if (currentY - textHeight < PADDING) {
+                            currentPage = pdfDoc.addPage(standardPageSize);
+                            currentY = currentPage.getHeight() - PADDING;
                         }
                         currentPage.drawText(singleWrappedLine.text, {
                             x: PADDING,
-                            y: currentY - FONT_SIZE, 
+                            y: currentY - FONT_SIZE,
                             font: font,
                             size: FONT_SIZE,
                             color: rgb(0.1, 0.1, 0.1), // Dark text color for light PDF background
                             lineHeight: FONT_SIZE * LINE_HEIGHT_RATIO,
                         });
-                        currentY -= textHeight; 
+                        currentY -= textHeight;
                     }
                 }
-                
+
                 const pdfBytes = await pdfDoc.save();
                 offerPdfDownload(pdfBytes, 'text_converted');
                 showStatus('Text PDF created successfully! Click the link to download.', 'success');
@@ -420,14 +539,14 @@
             }
         });
 
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
 
         // Initial button states
-        convertImagesToPdfButton.disabled = true; 
+        convertImagesToPdfButton.disabled = true;
     </script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4514307373624605"
      crossorigin="anonymous"></script>
-<!-- Unit1 -->
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-4514307373624605"
