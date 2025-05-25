@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4514307373624605"
+     crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About PDFTree - Our Privacy Mission</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Re-use custom scrollbar from index.html if needed for future content */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #44403c; /* stone-700 */
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #78716c; /* stone-500 */
+            border-radius: 10px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a8a29e; /* stone-400 */
+        }
+        hr {
+            border-color: #57534e; /* stone-600 */
+        }
+        /* Basic navigation styling */
+        .nav-link {
+            color: #a8a29e; /* stone-400 */
+            transition: color 0.2s ease-in-out;
+        }
+        .nav-link:hover {
+            color: #fbbf24; /* amber-400 */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-neutral-800 to-stone-900 text-stone-200 min-h-screen flex flex-col items-center p-4 selection:bg-amber-500 selection:text-white">
+
+    <div class="bg-stone-800 shadow-2xl rounded-xl p-6 md:p-8 w-full max-w-2xl flex flex-col items-center">
+        <header class="mb-6 text-center w-full">
+            <h1 class="text-3xl md:text-4xl font-bold text-amber-400 mb-2">About PDFTree</h1>
+            <p class="text-stone-400">Our commitment to your data privacy.</p>
+            <nav class="mt-4">
+                <a href="index.html" class="nav-link text-lg mx-3">Home</a>
+                <span class="text-stone-500">|</span>
+                <a href="about.html" class="nav-link text-lg mx-3 font-semibold text-amber-400">About</a>
+            </nav>
+        </header>
+
+        <main class="w-full text-left">
+            <section class="mb-8">
+                <h2 class="text-xl font-semibold text-amber-300 mb-4">Why We Built PDFTree</h2>
+                <p class="mb-4 text-stone-300 leading-relaxed">
+                    In today's digital world, converting documents to PDF is a common need. However, we noticed a significant gap in the market: a lack of truly private and secure online conversion tools. Most existing services require you to upload your sensitive documents to their servers, often in another country, before they can be processed. This raises concerns about data security, privacy breaches, and who truly controls your information.
+                </p>
+                <p class="mb-4 text-stone-300 leading-relaxed">
+                    That's why we created PDFTree. Our core mission is to empower users with a reliable PDF conversion solution where **your documents never leave your computer**. We believe that your personal and professional data should remain private, under your control, and not be exposed to third-party servers or unknown jurisdictions.
+                </p>
+                <p class="mb-4 text-stone-300 leading-relaxed">
+                    PDFTree is engineered to perform all conversions directly within your web browser. This client-side processing model ensures that your files are handled securely on your device, giving you complete peace of mind. We're passionate about privacy and are dedicated to providing a tool that respects your data as much as you do.
+                </p>
+            </section>
+
+            <hr class="my-8">
+
+            <section class="mb-8">
+                <h2 class="text-xl font-semibold text-amber-300 mb-4">Our Technology: Purely Client-Side</h2>
+                <p class="mb-4 text-stone-300 leading-relaxed">
+                    We utilize powerful JavaScript libraries (like PDF-lib) that run entirely in your web browser. When you select a file on PDFTree, the conversion happens right there, on your machine. This means:
+                </p>
+                <ul class="list-disc list-inside text-stone-300 mb-4 ml-4">
+                    <li class="mb-2"><strong>No Uploads:</strong> Your documents are never transmitted to our servers or any external cloud.</li>
+                    <li class="mb-2"><strong>Enhanced Security:</strong> Reduced risk of data interception or unauthorized access during transfer.</li>
+                    <li class="mb-2"><strong>Instant Privacy:</strong> Once the conversion is done and you download your file, the data is cleared from your browser's memory.</li>
+                </ul>
+                <p class="text-stone-300 leading-relaxed">
+                    We are constantly working to improve PDFTree, adding new features while strictly adhering to our privacy-first philosophy. Thank you for choosing a tool that puts your data privacy in your hands.
+                </p>
+            </section>
+
+        </main>
+
+        <footer class="mt-8 text-center w-full">
+            <p class="text-xs text-stone-500 mb-4">
+                &copy; <span id="currentYear"></span> PDFTree. Secure PDF Conversion done on your computer and nowhere else.
+            </p>
+            <a href="https://paypal.me/trreyy?country.x=US&locale.x=en_US" id="donateLink" target="_blank" rel="noopener noreferrer" class="button-link inline-flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2 px-5 rounded-lg shadow-md transition-colors duration-150 ease-in-out transform hover:scale-105">
+                <i class="fas fa-heart mr-2"></i> Support PDFTree
+            </a>
+        </footer>
+    </div>
+    <script>
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4514307373624605"
+     crossorigin="anonymous"></script>
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="ca-pub-4514307373624605"
+     data-ad-slot="5050185077"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+</body>
+</html>
