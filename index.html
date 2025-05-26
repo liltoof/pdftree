@@ -124,7 +124,6 @@
             font-size: 0.9em;
         }
 
-        /* New navigation styling */
         .nav-link {
             color: #a8a29e; /* stone-400 */
             transition: color 0.2s ease-in-out;
@@ -133,7 +132,6 @@
             color: #fbbf24; /* amber-400 */
         }
 
-        /* Drag and Drop styles */
         .drop-area {
             border: 2px dashed #78716c; /* stone-500 */
             border-radius: 10px;
@@ -141,7 +139,7 @@
             text-align: center;
             transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
             cursor: pointer;
-            margin-bottom: 1rem; /* Add some space below */
+            margin-bottom: 1rem;
         }
         .drop-area.drag-over {
             border-color: #fbbf24; /* amber-400 */
@@ -153,7 +151,7 @@
             margin-bottom: 10px;
         }
         .drop-area input[type="file"] {
-            display: none; /* Hide the default file input visually */
+            display: none;
         }
 
     </style>
@@ -290,9 +288,8 @@
     </div>
 
     <script>
-        // Get DOM elements
         const imageUpload = document.getElementById('imageUpload');
-        const dropArea = document.getElementById('dropArea'); // New: Drag and Drop area
+        const dropArea = document.getElementById('dropArea');
         const fileListDiv = document.getElementById('fileList');
         const convertImagesToPdfButton = document.getElementById('convertImagesToPdfButton');
         const imageButtonText = document.getElementById('imageButtonText');
@@ -311,7 +308,6 @@
 
         let selectedFiles = [];
 
-        // pdf-lib objects
         const { PDFDocument, StandardFonts, rgb, PageSizes, layoutMultilineText } = PDFLib;
 
         /**
@@ -319,7 +315,7 @@
          * @param {FileList | File[]} files The files to process.
          */
         function handleFiles(files) {
-            selectedFiles = []; // Clear previous selection
+            selectedFiles = [];
             fileListDiv.innerHTML = '';
             downloadArea.innerHTML = '';
             statusArea.textContent = '';
@@ -328,7 +324,7 @@
             const acceptedFiles = Array.from(files).filter(file => validImageTypes.includes(file.type));
 
             if (acceptedFiles.length > 0) {
-                selectedFiles = acceptedFiles; // Update selectedFiles with only accepted ones
+                selectedFiles = acceptedFiles;
                 const ul = document.createElement('ul');
                 ul.className = 'list-disc list-inside text-stone-300';
                 selectedFiles.forEach(file => {
@@ -345,32 +341,27 @@
             }
         }
 
-        /**
-         * Updates the list of selected files displayed to the user for image conversion.
-         */
         imageUpload.addEventListener('change', (event) => {
             handleFiles(event.target.files);
         });
 
-        // New: Drag and Drop Event Listeners
         dropArea.addEventListener('dragover', (event) => {
-            event.preventDefault(); // Prevent default to allow drop
+            event.preventDefault();
             dropArea.classList.add('drag-over');
             showStatus('Drop your images here...', 'info');
         });
 
         dropArea.addEventListener('dragleave', () => {
             dropArea.classList.remove('drag-over');
-            statusArea.textContent = ''; // Clear status when drag leaves
+            statusArea.textContent = '';
         });
 
         dropArea.addEventListener('drop', (event) => {
-            event.preventDefault(); // Prevent default to allow drop
+            event.preventDefault();
             dropArea.classList.remove('drag-over');
             handleFiles(event.dataTransfer.files);
         });
 
-        // Existing functions remain the same
         /**
          * Shows a status message.
          * @param {string} message - The message to display.
@@ -378,11 +369,10 @@
          */
         function showStatus(message, type = 'info') {
             statusArea.textContent = message;
-            // Earthy status colors
             statusArea.classList.remove('text-green-400', 'text-red-400', 'text-amber-300');
             switch (type) {
                 case 'success': statusArea.classList.add('text-green-400'); break;
-                case 'error': statusArea.classList.add('text-red-400'); break; // Standard red for error is often clearest
+                case 'error': statusArea.classList.add('text-red-400'); break;
                 case 'info': default: statusArea.classList.add('text-amber-300'); break;
             }
         }
@@ -429,9 +419,8 @@
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `PDFTree_${baseFileName}_${Date.now()}.pdf`; // Updated download filename prefix
+            a.download = `PDFTree_${baseFileName}_${Date.now()}.pdf`;
             a.textContent = 'Download PDF';
-            // Download link with new earth tone
             a.className = 'bg-amber-600 hover:bg-amber-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md inline-block transition-colors';
 
             downloadArea.innerHTML = '';
@@ -577,7 +566,7 @@
                             y: currentY - FONT_SIZE,
                             font: font,
                             size: FONT_SIZE,
-                            color: rgb(0.1, 0.1, 0.1), // Dark text color for light PDF background
+                            color: rgb(0.1, 0.1, 0.1),
                             lineHeight: FONT_SIZE * LINE_HEIGHT_RATIO,
                         });
                         currentY -= textHeight;
@@ -597,8 +586,6 @@
         });
 
         document.getElementById('currentYear').textContent = new Date().getFullYear();
-
-        // Initial button states
         convertImagesToPdfButton.disabled = true;
     </script>
 
