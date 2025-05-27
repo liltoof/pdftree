@@ -518,6 +518,9 @@
 
             downloadArea.innerHTML = '';
             downloadArea.appendChild(a);
+
+            // MODIFIED PART: Scroll to the download area
+            downloadArea.scrollIntoView({ behavior: 'smooth' });
         }
 
 
@@ -566,8 +569,8 @@
                              const firstPage = pdfDoc.getPage(0);
                              pageWidth = firstPage.getWidth();
                              pageHeight = firstPage.getHeight();
-                        } else { // Fallback if somehow getPage(0) fails (shouldn't happen if i > 0 and pages were added)
-                            pageWidth = imgWidth; // Should ideally not be reached
+                        } else { 
+                            pageWidth = imgWidth; 
                             pageHeight = imgHeight;
                         }
                     } else { 
