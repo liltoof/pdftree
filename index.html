@@ -6,10 +6,10 @@
      crossorigin="anonymous"></script>
 
 
-    <meta name="description" content="PDFTree: Free, secure PDF conversion in your browser. Convert images (JPG, PNG) & text. Files stay local. Ideal for businesses protecting customer data.">
+    <meta name="description" content="PDFTree: Free, secure PDF conversion and merging in your browser. Convert images (JPG, PNG), text, and merge PDFs. Files stay local. Ideal for businesses protecting customer data.">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDFTree - Free & Secure Image to PDF, Text to PDF Converter | Client-Side Privacy</title>
+    <title>PDFTree - Free & Secure PDF Converter & Merger | Client-Side Privacy</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -185,8 +185,11 @@
             <nav class="mt-4">
                 <a href="index.html" class="nav-link text-lg mx-3 font-semibold text-amber-400">Home</a>
                 <span class="text-stone-500">|</span>
+                <a href="#mergePdfSection" class="nav-link text-lg mx-3">Merge PDFs</a>
+                <span class="text-stone-500">|</span>
                 <a href="about.html" class="nav-link text-lg mx-3">About PDFTree</a>
-                <span class="text-stone-500">|</span> <a href="#howToUseSection" class="nav-link text-lg mx-3">How To Use</a> </nav>
+                <span class="text-stone-500">|</span> <a href="#howToUseSection" class="nav-link text-lg mx-3">How To Use</a>
+            </nav>
         </header>
 
         <main>
@@ -242,8 +245,8 @@
                 <div class="mb-6">
                     <label for="textPageSize" class="block text-sm font-medium text-stone-300 mb-1">PDF Page Size (for Text):</label>
                     <select id="textPageSize" class="w-full p-2 bg-stone-700 border border-stone-600 rounded-lg text-stone-200 focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+                        <option value="Letter" selected>Letter</option>
                         <option value="A4">A4</option>
-                        <option value="Letter">Letter</option>
                     </select>
                 </div>
                  <div class="mb-6">
@@ -257,6 +260,36 @@
                         class="bg-lime-600 hover:bg-lime-700 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-all duration-150 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto">
                         <span id="textButtonText">Convert Text to PDF</span>
                         <div id="textLoader" class="loader w-5 h-5 rounded-full border-2 border-stone-300 border-t-amber-400 ml-2 hidden"></div>
+                    </button>
+                </div>
+            </section>
+
+            <hr class="my-8">
+
+            <section id="mergePdfSection" class="mb-8">
+                <h2 class="text-xl font-semibold text-amber-300 mb-4">Merge PDFs</h2>
+                <div class="drop-area" id="mergeDropArea">
+                    <p class="drop-area-text">Drag & Drop PDFs here</p>
+                    <p class="drop-area-text">or</p>
+                    <label for="pdfUpload" class="block text-sm font-medium text-stone-300 mb-2">
+                        <span class="inline-block py-2 px-4 rounded-lg border-0 text-sm font-semibold bg-blue-600 text-blue-50 hover:bg-blue-700 cursor-pointer transition-colors">Browse PDF Files</span>
+                    </label>
+                    <input type="file" id="pdfUpload" multiple accept="application/pdf">
+                    <p class="privacy-note"><i class="fas fa-lock"></i> Your PDFs stay on your device, never uploaded.</p>
+                </div>
+
+                <div class="mb-6">
+                    <h3 class="text-sm font-medium text-stone-300 mb-1">Selected PDF Files (drag to reorder):</h3>
+                    <div id="mergeFileList" class="custom-scrollbar max-h-40 overflow-y-auto bg-stone-700 p-3 rounded-lg border border-stone-600 text-xs text-stone-300">
+                        No PDF files selected.
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button id="mergePdfsButton"
+                        class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2.5 px-6 rounded-lg shadow-md transition-all duration-150 ease-in-out transform hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center mx-auto">
+                        <span id="mergeButtonText">Merge PDFs</span>
+                        <div id="mergeLoader" class="loader w-5 h-5 rounded-full border-2 border-stone-300 border-t-amber-400 ml-2 hidden"></div>
                     </button>
                 </div>
             </section>
@@ -285,7 +318,7 @@
 
                 <h3 class="text-xl font-semibold text-amber-300 mb-4">The Process is Simple & Private:</h3>
                 <ol class="privacy-steps-list">
-                    <li><strong>Select Your Document:</strong> Choose the images or text you want to convert from your computer.</li>
+                    <li><strong>Select Your Document:</strong> Choose the images, text, or PDFs you want to convert from your computer.</li>
                     <li><strong>Browser Processes:</strong> Our innovative code processes your file directly in your web browser.</li>
                     <li><strong>Download Your PDF:</strong> Your new PDF is generated instantly and ready for download, all without ever leaving your device.</li>
                 </ol>
@@ -295,6 +328,14 @@
 
             <section id="howToUseSection" class="content-section text-stone-300 mb-8 px-4">
                 <h2 class="text-2xl font-semibold text-amber-300 mb-6 text-center">How to Use PDFTree</h2>
+
+                <h3 class="text-xl font-semibold text-amber-200 mb-3">Merging PDFs:</h3>
+                <ul class="mb-6">
+                    <li><strong>Step 1: Select PDFs</strong> - Drag and drop your PDF files onto the "Drag & Drop PDFs here" area, or click "Browse PDF Files" to select them from your computer.</li>
+                    <li><strong>Step 2: Review & Reorder Files</strong> - Your selected PDFs will appear in the "Selected PDF Files" list. You can drag and drop the file names to change the order they will be merged in.</li>
+                    <li><strong>Step 3: Merge</strong> - Click the "Merge PDFs" button. The tool will combine the PDFs directly in your browser.</li>
+                    <li><strong>Step 4: Download</strong> - Once merging is complete, a "Download PDF" link will appear. Click it to save your new combined PDF document.</li>
+                </ul>
 
                 <h3 class="text-xl font-semibold text-amber-200 mb-3">Converting Images to PDF:</h3>
                 <ul class="mb-6">
@@ -308,7 +349,7 @@
                 <h3 class="text-xl font-semibold text-amber-200 mb-3">Converting Text to PDF:</h3>
                 <ul class="mb-6">
                     <li><strong>Step 1: Input Text</strong> - Paste or type your text directly into the "Paste your text here" textarea.</li>
-                    <li><strong>Step 2: Choose Page Size</strong> - Select the preferred PDF page size (A4 or Letter) for your text document.</li>
+                    <li><strong>Step 2: Choose Page Size</strong> - Select the preferred PDF page size (Letter or A4) for your text document.</li>
                     <li><strong>Step 3: Set Font Size</strong> - Adjust the font size for your text using the "Font Size" input field. The default is 12.</li>
                     <li><strong>Step 4: Convert</strong> - Click the "Convert Text to PDF" button. The text will be processed locally.</li>
                     <li><strong>Step 5: Download</strong> - A "Download PDF" link will be provided once the PDF is generated. Click to save your document.</li>
@@ -321,11 +362,12 @@
             <section id="whyUsePdfTreeSection" class="content-section text-stone-300 mb-8 px-4"> <h2 class="text-2xl font-semibold text-amber-300 mb-6 text-center">Why Use PDFTree?</h2>
                 <ul class="mb-6">
                     <li><strong>Unparalleled Privacy:</strong> Unlike most online PDF converters, PDFTree processes all your files directly within your web browser. This means your sensitive documents, images, and text never leave your computer and are never uploaded to external servers. Your data remains 100% private and secure.</li>
-                    <li><strong>Completely Free:</strong> Access all conversion features without any cost. PDFTree is free to use for everyone.</li>
+                    <li><strong>Versatile Tools:</strong> Merge multiple PDFs into one, convert images (JPG, PNG) to PDF, or turn plain text into a PDF document.</li>
+                    <li><strong>Completely Free:</strong> Access all conversion and merging features without any cost. PDFTree is free to use for everyone.</li>
                     <li><strong>No Registration Required:</strong> Get straight to converting. You don't need to create an account or sign up for anything.</li>
                     <li><strong>Client-Side Processing:</strong> By leveraging the power of your own device, conversions are fast and you maintain complete control over your data from start to finish.</li>
                     <li><strong>User-Friendly Interface:</strong> PDFTree is designed to be simple and intuitive. Convert your files to PDF in just a few clicks with a clean and straightforward layout.</li>
-                    <li><strong>Supports Key Formats:</strong> Easily convert common image types (JPG, PNG) and plain text into universally accessible PDF documents.</li>
+                    <li><strong>Supports Key Formats:</strong> Easily merge PDFs, convert common image types (JPG, PNG), and plain text into universally accessible PDF documents.</li>
                     <li><strong>Customizable Output:</strong> Choose from standard page sizes and adjust font sizes for text documents to get your PDF looking just the way you want it.</li>
                 </ul>
                 <p class="text-sm text-stone-400 text-center">PDFTree is ideal for individuals and businesses who prioritize data security and need a quick, reliable PDF conversion tool without compromising on privacy.</p>
@@ -357,6 +399,12 @@
     </div>
 
     <script>
+        // Common Elements
+        const statusArea = document.getElementById('statusArea');
+        const downloadArea = document.getElementById('downloadArea');
+        const { PDFDocument, StandardFonts, rgb, PageSizes, layoutMultilineText } = PDFLib;
+
+        // Image to PDF Elements
         const imageUpload = document.getElementById('imageUpload');
         const dropArea = document.getElementById('dropArea');
         const fileListDiv = document.getElementById('fileList');
@@ -364,7 +412,9 @@
         const imageButtonText = document.getElementById('imageButtonText');
         const imageLoader = document.getElementById('imageLoader');
         const imagePageSizeSelect = document.getElementById('imagePageSize');
+        let selectedImageFiles = [];
 
+        // Text to PDF Elements
         const textInput = document.getElementById('textInput');
         const convertTextToPdfButton = document.getElementById('convertTextToPdfButton');
         const textButtonText = document.getElementById('textButtonText');
@@ -372,88 +422,18 @@
         const textPageSizeSelect = document.getElementById('textPageSize');
         const fontSizeInput = document.getElementById('fontSize');
 
-        const statusArea = document.getElementById('statusArea');
-        const downloadArea = document.getElementById('downloadArea');
-
-        let selectedFiles = [];
-
-        const { PDFDocument, StandardFonts, rgb, PageSizes, layoutMultilineText } = PDFLib;
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    // Optional: Adjust for fixed header height if you have one
-                    // const headerOffset = 60; // Example fixed header height
-                    // const elementPosition = targetElement.getBoundingClientRect().top;
-                    // const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-                    // window.scrollTo({
-                    //      top: offsetPosition,
-                    //      behavior: "smooth"
-                    // });
-                    targetElement.scrollIntoView({
-                        behavior: 'smooth'
-                        // block: 'start' // You can adjust alignment
-                    });
-                }
-            });
-        });
+        // Merge PDF Elements
+        const pdfUpload = document.getElementById('pdfUpload');
+        const mergeDropArea = document.getElementById('mergeDropArea');
+        const mergeFileListDiv = document.getElementById('mergeFileList');
+        const mergePdfsButton = document.getElementById('mergePdfsButton');
+        const mergeButtonText = document.getElementById('mergeButtonText');
+        const mergeLoader = document.getElementById('mergeLoader');
+        let selectedPdfFiles = [];
+        let draggedItem = null;
 
 
-        /**
-         * Processes an array of files, updating the UI.
-         * @param {FileList | File[]} files The files to process.
-         */
-        function handleFiles(files) {
-            selectedFiles = [];
-            fileListDiv.innerHTML = '';
-            downloadArea.innerHTML = '';
-            statusArea.textContent = '';
-
-            const validImageTypes = ['image/jpeg', 'image/png'];
-            const acceptedFiles = Array.from(files).filter(file => validImageTypes.includes(file.type));
-
-            if (acceptedFiles.length > 0) {
-                selectedFiles = acceptedFiles;
-                const ul = document.createElement('ul');
-                ul.className = 'list-disc list-inside text-stone-300';
-                selectedFiles.forEach(file => {
-                    const li = document.createElement('li');
-                    li.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
-                    ul.appendChild(li);
-                });
-                fileListDiv.appendChild(ul);
-                convertImagesToPdfButton.disabled = false;
-            } else {
-                fileListDiv.textContent = 'No valid image files selected or dropped.';
-                convertImagesToPdfButton.disabled = true;
-                showStatus('Please select JPG or PNG images.', 'error');
-            }
-        }
-
-        imageUpload.addEventListener('change', (event) => {
-            handleFiles(event.target.files);
-        });
-
-        dropArea.addEventListener('dragover', (event) => {
-            event.preventDefault();
-            dropArea.classList.add('drag-over');
-            showStatus('Drop your images here...', 'info');
-        });
-
-        dropArea.addEventListener('dragleave', () => {
-            dropArea.classList.remove('drag-over');
-            statusArea.textContent = '';
-        });
-
-        dropArea.addEventListener('drop', (event) => {
-            event.preventDefault();
-            dropArea.classList.remove('drag-over');
-            handleFiles(event.dataTransfer.files);
-        });
+        // --- Utility Functions ---
 
         /**
          * Shows a status message.
@@ -467,38 +447,6 @@
                 case 'success': statusArea.classList.add('text-green-400'); break;
                 case 'error': statusArea.classList.add('text-red-400'); break;
                 case 'info': default: statusArea.classList.add('text-amber-300'); break;
-            }
-        }
-
-        /**
-         * Sets the button state for image conversion.
-         * @param {boolean} isLoading - True if loading, false otherwise.
-         */
-        function setImageButtonLoading(isLoading) {
-            if (isLoading) {
-                convertImagesToPdfButton.disabled = true;
-                imageButtonText.textContent = 'Processing...';
-                imageLoader.classList.remove('hidden');
-            } else {
-                convertImagesToPdfButton.disabled = false;
-                imageButtonText.textContent = 'Convert Images to PDF';
-                imageLoader.classList.add('hidden');
-            }
-        }
-
-        /**
-         * Sets the button state for text conversion.
-         * @param {boolean} isLoading - True if loading, false otherwise.
-         */
-        function setTextButtonLoading(isLoading) {
-            if (isLoading) {
-                convertTextToPdfButton.disabled = true;
-                textButtonText.textContent = 'Processing...';
-                textLoader.classList.remove('hidden');
-            } else {
-                convertTextToPdfButton.disabled = false;
-                textButtonText.textContent = 'Convert Text to PDF';
-                textLoader.classList.add('hidden');
             }
         }
 
@@ -518,22 +466,66 @@
 
             downloadArea.innerHTML = '';
             downloadArea.appendChild(a);
-
-            // MODIFIED PART: Scroll to the download area
             downloadArea.scrollIntoView({ behavior: 'smooth' });
         }
+        
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
 
+        // --- Image to PDF Logic ---
 
-        /**
-         * Handles the Image to PDF conversion process.
-         */
+        function handleImageFiles(files) {
+            selectedImageFiles = [];
+            fileListDiv.innerHTML = '';
+            downloadArea.innerHTML = '';
+            statusArea.textContent = '';
+
+            const validImageTypes = ['image/jpeg', 'image/png'];
+            const acceptedFiles = Array.from(files).filter(file => validImageTypes.includes(file.type));
+
+            if (acceptedFiles.length > 0) {
+                selectedImageFiles = acceptedFiles;
+                const ul = document.createElement('ul');
+                ul.className = 'list-disc list-inside text-stone-300';
+                selectedImageFiles.forEach(file => {
+                    const li = document.createElement('li');
+                    li.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                    ul.appendChild(li);
+                });
+                fileListDiv.appendChild(ul);
+                convertImagesToPdfButton.disabled = false;
+            } else {
+                fileListDiv.textContent = 'No valid image files (JPG, PNG) selected.';
+                convertImagesToPdfButton.disabled = true;
+                showStatus('Please select JPG or PNG images.', 'error');
+            }
+        }
+
+        imageUpload.addEventListener('change', (event) => handleImageFiles(event.target.files));
+        dropArea.addEventListener('dragover', (event) => { event.preventDefault(); dropArea.classList.add('drag-over'); });
+        dropArea.addEventListener('dragleave', () => dropArea.classList.remove('drag-over'));
+        dropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            dropArea.classList.remove('drag-over');
+            handleImageFiles(event.dataTransfer.files);
+        });
+
         convertImagesToPdfButton.addEventListener('click', async () => {
-            if (selectedFiles.length === 0) {
+            if (selectedImageFiles.length === 0) {
                 showStatus('Please select some images first.', 'error');
                 return;
             }
-
-            setImageButtonLoading(true);
+            // Button loading state
+            convertImagesToPdfButton.disabled = true;
+            imageButtonText.textContent = 'Processing...';
+            imageLoader.classList.remove('hidden');
             showStatus('Starting image to PDF generation...', 'info');
             downloadArea.innerHTML = '';
 
@@ -541,147 +533,247 @@
                 const pdfDoc = await PDFDocument.create();
                 const selectedPageSizeOption = imagePageSizeSelect.value;
 
-                for (let i = 0; i < selectedFiles.length; i++) {
-                    const file = selectedFiles[i];
-                    showStatus(`Processing image ${i + 1} of ${selectedFiles.length}: ${file.name}`, 'info');
-
+                for (let i = 0; i < selectedImageFiles.length; i++) {
+                    const file = selectedImageFiles[i];
+                    showStatus(`Processing image ${i + 1} of ${selectedImageFiles.length}: ${file.name}`, 'info');
                     const imageBytes = await file.arrayBuffer();
-                    let embeddedImage;
-
-                    if (file.type === 'image/jpeg') {
-                        embeddedImage = await pdfDoc.embedJpg(imageBytes);
-                    } else if (file.type === 'image/png') {
-                        embeddedImage = await pdfDoc.embedPng(imageBytes);
-                    } else {
-                        console.warn(`Skipping unsupported file type: ${file.name}`);
-                        showStatus(`Skipped unsupported file: ${file.name}`, 'error');
-                        continue;
-                    }
-
+                    const embeddedImage = file.type === 'image/jpeg' ? await pdfDoc.embedJpg(imageBytes) : await pdfDoc.embedPng(imageBytes);
+                    
                     const { width: imgWidth, height: imgHeight } = embeddedImage.scale(1);
                     let pageWidth, pageHeight;
 
                     if (selectedPageSizeOption === 'FitImage') {
-                        if (i === 0) { 
+                        if (i === 0) {
                             pageWidth = imgWidth;
                             pageHeight = imgHeight;
-                        } else if (pdfDoc.getPageCount() > 0) { 
+                        } else {
                              const firstPage = pdfDoc.getPage(0);
                              pageWidth = firstPage.getWidth();
                              pageHeight = firstPage.getHeight();
-                        } else { 
-                            pageWidth = imgWidth; 
-                            pageHeight = imgHeight;
                         }
-                    } else { 
-                        const standardPageSize = PageSizes[selectedPageSizeOption]; 
+                    } else {
+                        const standardPageSize = PageSizes[selectedPageSizeOption];
                         pageWidth = standardPageSize[0];
                         pageHeight = standardPageSize[1];
                     }
                     
                     const page = pdfDoc.addPage([pageWidth, pageHeight]);
-                    const xScale = page.getWidth() / imgWidth;
-                    const yScale = page.getHeight() / imgHeight;
-                    const scale = Math.min(xScale, yScale); 
+                    const scale = Math.min(page.getWidth() / imgWidth, page.getHeight() / imgHeight);
                     const scaledWidth = imgWidth * scale;
                     const scaledHeight = imgHeight * scale;
-                    const xPos = (page.getWidth() - scaledWidth) / 2; 
-                    const yPos = (page.getHeight() - scaledHeight) / 2; 
+                    const xPos = (page.getWidth() - scaledWidth) / 2;
+                    const yPos = (page.getHeight() - scaledHeight) / 2;
 
                     page.drawImage(embeddedImage, { x: xPos, y: yPos, width: scaledWidth, height: scaledHeight });
                 }
 
                 if (pdfDoc.getPageCount() === 0) {
-                    showStatus('No valid images were processed. PDF not created.', 'error');
-                    setImageButtonLoading(false);
-                    return;
+                    throw new Error('No valid images were processed.');
                 }
 
                 const pdfBytes = await pdfDoc.save();
                 offerPdfDownload(pdfBytes, 'images_converted');
-                showStatus('Images PDF created successfully! Click the link to download.', 'success');
+                showStatus('Images PDF created successfully!', 'success');
 
             } catch (error) {
                 console.error('Error creating image PDF:', error);
                 showStatus(`Error creating image PDF: ${error.message}`, 'error');
             } finally {
-                setImageButtonLoading(false);
+                convertImagesToPdfButton.disabled = false;
+                imageButtonText.textContent = 'Convert Images to PDF';
+                imageLoader.classList.add('hidden');
             }
         });
 
-        /**
-         * Handles the Text to PDF conversion process.
-         */
+        // --- Text to PDF Logic ---
+        
         convertTextToPdfButton.addEventListener('click', async () => {
             const text = textInput.value.trim();
             if (!text) {
                 showStatus('Please enter some text first.', 'error');
                 return;
             }
-
-            setTextButtonLoading(true);
+            // Button loading state
+            convertTextToPdfButton.disabled = true;
+            textButtonText.textContent = 'Processing...';
+            textLoader.classList.remove('hidden');
             showStatus('Starting text to PDF generation...', 'info');
             downloadArea.innerHTML = '';
 
             try {
                 const pdfDoc = await PDFDocument.create();
-                const selectedPageSizeOption = textPageSizeSelect.value;
-                const standardPageSize = PageSizes[selectedPageSizeOption];
-
+                const standardPageSize = PageSizes[textPageSizeSelect.value];
                 const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
                 const FONT_SIZE = parseInt(fontSizeInput.value) || 12;
-                const LINE_HEIGHT_RATIO = 1.2;
                 const PADDING = 50;
 
                 let currentPage = pdfDoc.addPage(standardPageSize);
-                let currentY = currentPage.getHeight() - PADDING;
+                let { width, height } = currentPage.getSize();
+                let y = height - PADDING;
 
                 const textLines = text.split('\n');
 
                 for (const line of textLines) {
-                    const { lines: wrappedLines } = layoutMultilineText(line, {
-                        font: font,
+                     const { lines: wrappedLines } = layoutMultilineText(line || ' ', {
+                        font,
                         fontSize: FONT_SIZE,
-                        bounds: {
-                            x: PADDING,
-                            y: currentY, 
-                            width: currentPage.getWidth() - 2 * PADDING,
-                            height: currentY - PADDING 
-                        },
-                        lineHeight: FONT_SIZE * LINE_HEIGHT_RATIO,
+                        bounds: { x: PADDING, y, width: width - 2 * PADDING, height: y - PADDING },
+                        lineHeight: FONT_SIZE * 1.2,
                     });
 
-                    for (const singleWrappedLine of wrappedLines) {
-                        const textHeight = FONT_SIZE * LINE_HEIGHT_RATIO; 
-                        if (currentY - textHeight < PADDING) { 
+                    for (const wrappedLine of wrappedLines) {
+                        const textHeight = FONT_SIZE * 1.2;
+                        if (y - textHeight < PADDING) {
                             currentPage = pdfDoc.addPage(standardPageSize);
-                            currentY = currentPage.getHeight() - PADDING; 
+                            y = currentPage.getHeight() - PADDING;
                         }
-                        currentPage.drawText(singleWrappedLine.text, {
-                            x: PADDING,
-                            y: currentY - FONT_SIZE, 
-                            font: font,
-                            size: FONT_SIZE,
-                            color: rgb(0.1, 0.1, 0.1), 
-                        });
-                        currentY -= textHeight; 
+                        currentPage.drawText(wrappedLine.text, { x: PADDING, y, font, size: FONT_SIZE, color: rgb(0, 0, 0) });
+                        y -= textHeight;
                     }
                 }
 
                 const pdfBytes = await pdfDoc.save();
                 offerPdfDownload(pdfBytes, 'text_converted');
-                showStatus('Text PDF created successfully! Click the link to download.', 'success');
+                showStatus('Text PDF created successfully!', 'success');
 
             } catch (error) {
                 console.error('Error creating text PDF:', error);
                 showStatus(`Error creating text PDF: ${error.message}`, 'error');
             } finally {
-                setTextButtonLoading(false);
+                convertTextToPdfButton.disabled = false;
+                textButtonText.textContent = 'Convert Text to PDF';
+                textLoader.classList.add('hidden');
             }
         });
 
+
+        // --- Merge PDF Logic ---
+        function updateMergeFileList() {
+            mergeFileListDiv.innerHTML = '';
+            if (selectedPdfFiles.length === 0) {
+                mergeFileListDiv.textContent = 'No PDF files selected.';
+                mergePdfsButton.disabled = true;
+                return;
+            }
+
+            const ul = document.createElement('ul');
+            ul.className = 'list-none p-0 m-0';
+            selectedPdfFiles.forEach((file, index) => {
+                const li = document.createElement('li');
+                li.textContent = `${file.name} (${(file.size / 1024).toFixed(1)} KB)`;
+                li.className = 'p-2 my-1 bg-stone-600 rounded cursor-move';
+                li.draggable = true;
+                li.dataset.index = index;
+
+                li.addEventListener('dragstart', (e) => {
+                    draggedItem = e.target;
+                    setTimeout(() => e.target.style.display = 'none', 0);
+                });
+                li.addEventListener('dragend', (e) => {
+                    setTimeout(() => {
+                        draggedItem.style.display = 'block';
+                        draggedItem = null;
+                    }, 0);
+                });
+                li.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    const afterElement = getDragAfterElement(ul, e.clientY);
+                    const draggingIndex = parseInt(draggedItem.dataset.index);
+                    if (afterElement == null) {
+                        ul.appendChild(draggedItem);
+                        selectedPdfFiles.push(selectedPdfFiles.splice(draggingIndex, 1)[0]);
+                    } else {
+                        ul.insertBefore(draggedItem, afterElement);
+                        const newIndex = Array.from(ul.children).indexOf(draggedItem);
+                        selectedPdfFiles.splice(newIndex, 0, selectedPdfFiles.splice(draggingIndex, 1)[0]);
+                    }
+                     // Re-assign indices after reorder
+                    Array.from(ul.children).forEach((child, idx) => child.dataset.index = idx);
+                });
+
+                ul.appendChild(li);
+            });
+            mergeFileListDiv.appendChild(ul);
+            mergePdfsButton.disabled = false;
+        }
+        
+        function getDragAfterElement(container, y) {
+            const draggableElements = [...container.querySelectorAll('li:not(.dragging)')];
+            return draggableElements.reduce((closest, child) => {
+                const box = child.getBoundingClientRect();
+                const offset = y - box.top - box.height / 2;
+                if (offset < 0 && offset > closest.offset) {
+                    return { offset: offset, element: child };
+                } else {
+                    return closest;
+                }
+            }, { offset: Number.NEGATIVE_INFINITY }).element;
+        }
+
+        function handlePdfFiles(files) {
+            downloadArea.innerHTML = '';
+            statusArea.textContent = '';
+            const acceptedFiles = Array.from(files).filter(file => file.type === 'application/pdf');
+
+            if (acceptedFiles.length > 0) {
+                selectedPdfFiles.push(...acceptedFiles);
+                updateMergeFileList();
+            } else {
+                showStatus('Please select valid PDF files.', 'error');
+            }
+        }
+
+        pdfUpload.addEventListener('change', (event) => handlePdfFiles(event.target.files));
+        mergeDropArea.addEventListener('dragover', (event) => { event.preventDefault(); mergeDropArea.classList.add('drag-over'); });
+        mergeDropArea.addEventListener('dragleave', () => mergeDropArea.classList.remove('drag-over'));
+        mergeDropArea.addEventListener('drop', (event) => {
+            event.preventDefault();
+            mergeDropArea.classList.remove('drag-over');
+            handlePdfFiles(event.dataTransfer.files);
+        });
+
+        mergePdfsButton.addEventListener('click', async () => {
+            if (selectedPdfFiles.length < 2) {
+                showStatus('Please select at least two PDFs to merge.', 'error');
+                return;
+            }
+            // Button loading state
+            mergePdfsButton.disabled = true;
+            mergeButtonText.textContent = 'Merging...';
+            mergeLoader.classList.remove('hidden');
+            showStatus('Starting PDF merge...', 'info');
+            downloadArea.innerHTML = '';
+
+            try {
+                const mergedPdf = await PDFDocument.create();
+                for (let i = 0; i < selectedPdfFiles.length; i++) {
+                    const file = selectedPdfFiles[i];
+                    showStatus(`Processing PDF ${i + 1} of ${selectedPdfFiles.length}: ${file.name}`, 'info');
+                    const pdfBytes = await file.arrayBuffer();
+                    const pdf = await PDFDocument.load(pdfBytes);
+                    const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                    copiedPages.forEach((page) => mergedPdf.addPage(page));
+                }
+
+                const mergedPdfBytes = await mergedPdf.save();
+                offerPdfDownload(mergedPdfBytes, 'merged_pdf');
+                showStatus('PDFs merged successfully!', 'success');
+
+            } catch (error) {
+                console.error('Error merging PDFs:', error);
+                showStatus(`Error merging PDFs: ${error.message}`, 'error');
+            } finally {
+                mergePdfsButton.disabled = false;
+                mergeButtonText.textContent = 'Merge PDFs';
+                mergeLoader.classList.add('hidden');
+            }
+        });
+
+        // --- Initial State ---
         document.getElementById('currentYear').textContent = new Date().getFullYear();
-        convertImagesToPdfButton.disabled = true; 
+        convertImagesToPdfButton.disabled = true;
+        mergePdfsButton.disabled = true;
+
     </script>
 
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4514307373624605"
